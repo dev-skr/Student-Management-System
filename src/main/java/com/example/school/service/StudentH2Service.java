@@ -67,15 +67,18 @@ public JdbcTemplate db;
       Student existStudent=getStudentById(studentId);
 
       if(student.getStudentName()!=null)
-      db.update("update student set studentName=? where studentId = ?",student.getStudentName(),studentId);
+      existStudent.setStudentName(student.getStudentName());
 
       if(student.getGender() !=null)
-     db.update("update student set gender=? where studentId= ?",student.getGender(),studentId);
+     existStudent.setGender(student.getGender());
 
        if(student.getStandard() != 0)
-     db.update("update student set standard=? where studentId= ?",student.getStandard(),studentId);
+     existStudent.setStandard(student.getStandard());
+
+     db.update("update student set studentName=?, gender=?, standard=? where studentId=?",
+     existStudent.getStudentName(),existStudent.getGender(),existStudent.getStandard(),studentId);
      
-     return getStudentById(studentId);
+     return existStudent;
     }
 
  @Override

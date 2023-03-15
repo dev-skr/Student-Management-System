@@ -64,21 +64,18 @@ public JdbcTemplate db;
  @Override
     public Student updateStudent(int studentId,Student student){
 
-      Student existStudent=getStudentById(studentId);
+      
 
       if(student.getStudentName()!=null)
-      existStudent.setStudentName(student.getStudentName());
+      db.update("update student set studentName=? where studentId = ?",student.getStudentName(),studentId);
 
       if(student.getGender() !=null)
-     existStudent.setGender(student.getGender());
+     db.update("update student set gender=? where studentId= ?",student.getGender(),studentId);
 
        if(student.getStandard() != 0)
-     existStudent.setStandard(student.getStandard());
-
-     db.update("update student set studentName=?, gender=?, standard=? where studentId=?",
-     existStudent.getStudentName(),existStudent.getGender(),existStudent.getStandard(),studentId);
+     db.update("update student set standard=? where studentId= ?",student.getStandard(),studentId);
      
-     return existStudent;
+     return getStudentById(studentId);
     }
 
  @Override
